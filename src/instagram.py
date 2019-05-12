@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from pynput.keyboard import Key, Controller
+import time
 import sys
 
 
@@ -34,6 +36,7 @@ class WebUIInterface(object):
         self.password = password
         self.headless = headless
         self.browser = None
+        self.keyboard = Controller()
 
     def login(self):
         """
@@ -85,6 +88,12 @@ class WebUIInterface(object):
         element = self.browser.find_element_by_xpath("//span[@aria-label='New Post']")
         element = element.find_element_by_xpath("./..")
         element.click()
-        element = self.browser.find_elements_by_xpath("//input[@type='file']")
-        for file in element:
-            file.send_keys(image_path)
+        with self.keyboard.pressed(Key.ctrl):
+            self.keyboard.press('l')
+            self.keyboard.release('l')
+
+        self.keyboard.type(image_path)
+        time.sleep(1)
+        self.keyboard.press(Key.enter)
+        self.keyboard.release(Key.enter)
+
