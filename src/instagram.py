@@ -21,6 +21,18 @@ def ensure_login(func):
     return enforcer
 
 
+class Dummy(object):
+    def __init__(self, username, password, headless=False):
+        pass
+
+    def login(self):
+        print("Logging in")
+
+    def post(self, image_path, message, expand=True):
+        print("Posting", image_path)
+        print("Message", message)
+
+
 class WebUIInterface(object):
 
     logged_in = False
@@ -84,7 +96,14 @@ class WebUIInterface(object):
                 raise ConnectionError("Logging into instagram failed!")
 
     @ensure_login
-    def post(self, image_path, message, expand=False):
+    def post(self, image_path, message, expand=True):
+        """
+        Post an image and its message
+        :param image_path:
+        :param message:
+        :param expand:
+        :return:
+        """
         element = self.browser.find_element_by_xpath("//span[@aria-label='New Post']")
         element = element.find_element_by_xpath("./..")
         element.click()
