@@ -10,7 +10,7 @@ def main():
 
     insta = instagram.WebUIInterface(args.username, args.password)
     insta.login()
-    insta.post("/home/ekow/img004.jpg", "First automated test post")
+    insta.post("/home/ekow/Pictures/James Ainooson 1 Roll E6 Disc 05.20.2019/000282810001.jpg", "First automated test post", expand=True)
 
 
 if __name__ == "__main__":

@@ -12,9 +12,9 @@ def ensure_login(func):
     :return:
     """
 
-    def enforcer(instance, image_path, message):
+    def enforcer(instance, image_path, message, expand):
         if WebUIInterface.logged_in:
-            func(instance, image_path, message)
+            func(instance, image_path, message, expand)
         else:
             print("You are currently not logged in!", file=sys.stderr)
 
@@ -84,7 +84,7 @@ class WebUIInterface(object):
                 raise ConnectionError("Logging into instagram failed!")
 
     @ensure_login
-    def post(self, image_path, message):
+    def post(self, image_path, message, expand=False):
         element = self.browser.find_element_by_xpath("//span[@aria-label='New Post']")
         element = element.find_element_by_xpath("./..")
         element.click()
@@ -96,4 +96,29 @@ class WebUIInterface(object):
         time.sleep(1)
         self.keyboard.press(Key.enter)
         self.keyboard.release(Key.enter)
+
+        time.sleep(3)
+
+        if expand:
+            element = self.browser.find_element_by_xpath("//span[text()='Expand']")
+            element = element.find_element_by_xpath("./..")
+            element.click()
+
+        time.sleep(1)
+
+        element = self.browser.find_element_by_xpath("//button[text()='Next']")
+        element.click()
+
+        time.sleep(2)
+
+        element = self.browser.find_element_by_xpath("//textarea[@placeholder='Write a caption…']")
+        element.send_keys(message)
+
+        time.sleep(2)
+
+        element = self.browser.find_element_by_xpath("//button[text()='Share']")
+        element.click()
+
+
+
 
