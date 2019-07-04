@@ -16,8 +16,8 @@ def post(insta, source):
         print(message)
 
     insta.post(image, message)
-    # os.unlink(image)
-    # os.unlink(text_file)
+    os.unlink(image)
+    os.unlink(text_file)
 
 
 def run(insta, source):
