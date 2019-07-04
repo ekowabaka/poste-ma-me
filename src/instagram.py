@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
-#from pynput.keyboard import Key, Controller
 import pyautogui
 import time
 import sys
@@ -14,7 +13,7 @@ def ensure_login(func):
     :return:
     """
 
-    def enforcer(instance, image_path, message, expand):
+    def enforcer(instance, image_path, message, expand=True):
         if WebUIInterface.logged_in:
             func(instance, image_path, message, expand)
         else:
@@ -89,7 +88,7 @@ class WebUIInterface(object):
 
         element = self.browser.find_element_by_xpath("//div[text()='Log In']")
         element.click()
-        time.sleep(2)
+        time.sleep(15)
 
         try:
             element = self.browser.find_element_by_xpath("//button[text()='Not Now']")
@@ -103,6 +102,7 @@ class WebUIInterface(object):
                 element = self.browser.find_element_by_xpath("//span[@aria-label='Profile']")
                 element = element.find_element_by_xpath("./..")
                 element.click()
+                time.sleep(5)
                 WebUIInterface.logged_in = True
             except NoSuchElementException:
                 WebUIInterface.logged_in = False
@@ -120,19 +120,11 @@ class WebUIInterface(object):
         element = self.browser.find_element_by_xpath("//span[@aria-label='New Post']")
         element = element.find_element_by_xpath("./..")
         element.click()
-        # with self.keyboard.pressed(Key.ctrl):
-        #     self.keyboard.press('l')
-        #     self.keyboard.release('l')
-        pyautogui.keyDown('ctrl')
-        pyautogui.press('l')
-        pyautogui.keyUp('ctrl')
+        pyautogui.hotkey('ctrl', 'l')
 
-        #self.keyboard.type(image_path)
         pyautogui.typewrite(image_path)
         time.sleep(2)
         pyautogui.press('enter')
-        # self.keyboard.press(Key.enter)
-        # self.keyboard.release(Key.enter)
 
         time.sleep(3)
 

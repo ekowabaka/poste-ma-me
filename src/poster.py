@@ -6,7 +6,9 @@ import time
 
 
 def post(insta, source):
-    images = glob.glob(os.path.join(source, "*.png"))
+    images = list()
+    for extension in ['*.jpg', '*.jpeg', '*.png']:
+        images.extend(glob.glob(os.path.join(source, extension)))
     image = random.choice(images)
     insta.post(image, 'Test')
 
