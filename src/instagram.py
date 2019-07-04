@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 #from pynput.keyboard import Key, Controller
 import pyautogui
@@ -38,6 +39,22 @@ class WebUIInterface(object):
 
     logged_in = False
 
+    def get_firefox(self):
+        profile = webdriver.FirefoxProfile()
+        profile.set_preference(
+            "general.useragent.override",
+            "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) "
+            "Chrome/18.0.1025.133 Mobile Safari/535.19 "
+        )
+        return webdriver.Firefox(profile)
+
+    def get_chrome(self):
+        options = Options()
+        userAgent = "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, " \
+                    "like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19 "
+        options.add_argument("user-agent=%s" % userAgent)
+        return webdriver.Chrome(chrome_options=options)
+
     def __init__(self, username, password, headless=False):
         """
         Create an instance of the instagram interface
@@ -49,26 +66,20 @@ class WebUIInterface(object):
         self.password = password
         self.headless = headless
         self.browser = None
-        #self.keyboard = Controller()
 
     def login(self):
         """
         Loginto the instagram web UI
         :return:
         """
-        profile = webdriver.FirefoxProfile()
-        profile.set_preference(
-            "general.useragent.override",
-            "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) "
-            "Chrome/18.0.1025.133 Mobile Safari/535.19 "
-        )
-        self.browser = webdriver.Firefox(profile)
+        self.browser = self.get_chrome()
         self.browser.implicitly_wait(10)
-        self.browser.set_window_size(400, 750)
+        self.browser.set_window_size(400, 850)
         self.browser.get("http://instagram.com")
 
         element = self.browser.find_element_by_xpath("//button[text()='Log In']")
         element.click()
+        time.sleep(1)
 
         element = self.browser.find_element_by_name("username")
         element.send_keys(self.username)
@@ -78,6 +89,7 @@ class WebUIInterface(object):
 
         element = self.browser.find_element_by_xpath("//div[text()='Log In']")
         element.click()
+        time.sleep(2)
 
         try:
             element = self.browser.find_element_by_xpath("//button[text()='Not Now']")
@@ -117,7 +129,7 @@ class WebUIInterface(object):
 
         #self.keyboard.type(image_path)
         pyautogui.typewrite(image_path)
-        time.sleep(1)
+        time.sleep(2)
         pyautogui.press('enter')
         # self.keyboard.press(Key.enter)
         # self.keyboard.release(Key.enter)
@@ -129,7 +141,7 @@ class WebUIInterface(object):
             element = element.find_element_by_xpath("./..")
             element.click()
 
-        time.sleep(1)
+        time.sleep(2)
 
         element = self.browser.find_element_by_xpath("//button[text()='Next']")
         element.click()
