@@ -71,7 +71,7 @@ class WebUIInterface(object):
         Loginto the instagram web UI
         :return:
         """
-        self.browser = self.get_chrome()
+        self.browser = self.get_firefox()
         self.browser.implicitly_wait(10)
         self.browser.set_window_size(400, 850)
         self.browser.get("http://instagram.com")
