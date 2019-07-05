@@ -120,30 +120,31 @@ class WebUIInterface(object):
         element = self.browser.find_element_by_xpath("//span[@aria-label='New Post']")
         element = element.find_element_by_xpath("./..")
         element.click()
+        time.sleep(2)
         pyautogui.hotkey('ctrl', 'l')
 
         pyautogui.typewrite(image_path)
-        time.sleep(2)
+        time.sleep(20)
         pyautogui.press('enter')
 
-        time.sleep(3)
+        time.sleep(20)
 
         if expand:
             element = self.browser.find_element_by_xpath("//span[text()='Expand']")
             element = element.find_element_by_xpath("./..")
             element.click()
 
-        time.sleep(2)
+        time.sleep(20)
 
         element = self.browser.find_element_by_xpath("//button[text()='Next']")
         element.click()
 
-        time.sleep(2)
+        time.sleep(20)
 
         element = self.browser.find_element_by_xpath("//textarea[@placeholder='Write a caption…']")
         element.send_keys(message)
 
-        time.sleep(2)
+        time.sleep(20)
 
         element = self.browser.find_element_by_xpath("//button[text()='Share']")
         element.click()
