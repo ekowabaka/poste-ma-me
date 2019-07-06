@@ -1,1 +1,2 @@
-# poste-ma-me
+# Poste ma me
+A simple instagram bot that exploits the tried and tested approach of automating Instagram's mobile web interface with selenium. My main goal for implementing this, of course, is to automate posting to my instagram. You see, the instagram web ui seem to have some smarts incorporated that prevents automation tools like selenium from programatically performing uploads. To counter this, this project actually clic  

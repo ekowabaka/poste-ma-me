@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 import pyautogui
 import time
 import sys
+import logging
 
 
 def ensure_login(func):
@@ -65,6 +66,7 @@ class WebUIInterface(object):
         self.password = password
         self.headless = headless
         self.browser = None
+        self.logger = logging.getLogger("WebUI")
 
     def login(self):
         """
