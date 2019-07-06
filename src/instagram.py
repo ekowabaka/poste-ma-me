@@ -57,7 +57,7 @@ class WebUIInterface(object):
 
     def __init__(self, username, password, headless=False):
         """
-        Create an instance of the instagram interface
+        Creates an instance of the instagram interface
         :param username:
         :param password:
         :param headless:
@@ -70,7 +70,7 @@ class WebUIInterface(object):
 
     def login(self):
         """
-        Loginto the instagram web UI
+        Logs into the instagram web UI through selenium
         :return:
         """
         self.browser = self.get_firefox()
